@@ -34,7 +34,12 @@ try {
 }
 
 const url = (post as { url?: unknown } | null)?.url;
-if (typeof url !== "string" || !/^https:\/\/(www\.|mobile\.)?(x\.com|twitter\.com)\//.test(url)) {
+if (
+  typeof url !== "string" ||
+  url.includes("<") ||
+  url.includes(">") ||
+  !/^https:\/\/(www\.|mobile\.)?(x\.com|twitter\.com)\/\w+\/status\/\d+$/.test(url)
+) {
   fail(`${POST_FILE} does not hold an X post address yet — replace the placeholder first`);
 }
 
